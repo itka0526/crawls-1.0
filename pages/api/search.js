@@ -1,4 +1,5 @@
 import { load } from "cheerio";
+import { URL } from "url";
 
 export default async function handler(req, res) {
     if (req.method === "POST") {
@@ -7,21 +8,17 @@ export default async function handler(req, res) {
 
         const pending_response = await fetch(search);
         const html = await pending_response.text();
+
         const $ = load(html);
 
-        const HTML_RESULTS_CONTAINER = $("body");
+        const HTML_RESULTS_CONTAINER = $("#main");
 
         const blacklist = /google/gi;
-        const URLmustContain = [{ ["Must contain https://"]: /https:\/\//i }];
-        const TextMustContain = [
-            {
-                "1 or more letters": /^.{1,}$/,
-            },
-        ];
         const temp = [];
 
         const replaceLinkStructure = {
             ["URL starts with /url?q="]: /\/url\?q=/gi,
+            ["Google's custom param remove"]: /&sa=U&ved=/,
         };
 
         function recursive(element) {
@@ -29,26 +26,28 @@ export default async function handler(req, res) {
                 element.attr("href") &&
                 blacklist.test(element.attr("href")) === false
             ) {
-                const link = element
+                let link = element
                     .attr("href")
                     .replace(
                         replaceLinkStructure["URL starts with /url?q="],
                         ""
                     );
 
-                const text = element.text();
+                try {
+                    const text = element.text();
+                    let validURL = new URL(link);
 
-                const passedURLTest = URLmustContain.some((test) => {
-                    const TEST_REGEX = Object.values(test)[0];
-                    return TEST_REGEX.test(link);
-                });
+                    validURL = validURL.href.slice(
+                        0,
+                        replaceLinkStructure[
+                            "Google's custom param remove"
+                        ].exec(validURL).index
+                    );
 
-                const passedTextTest = TextMustContain.some((test) => {
-                    const TEST_REGEX = Object.values(test)[0];
-                    return TEST_REGEX.test(text);
-                });
-
-                passedURLTest && passedTextTest && temp.push({ text, link });
+                    temp.push({ text, link: validURL });
+                } catch (error) {
+                    console.error(link);
+                }
             }
             if (element.children().length <= 0) return;
             return element.children().each((_, item) => recursive($(item)));
