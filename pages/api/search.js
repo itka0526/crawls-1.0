@@ -3,7 +3,7 @@ import { load } from "cheerio";
 export default async function handler(req, res) {
     if (req.method === "POST") {
         const { query } = req.body;
-        const search = `https://www.google.mn/search?q=${query}&sxsrf=ALiCzsYMkvaQSytaGmNucvjqZ3Ve4_VHvQ%3A1658848312160&ei=OATgYpPVCNbt2roP5uWegAQ&ved=0ahUKEwiT0YbD65b5AhXWtlYBHeayB0AQ4dUDCA4&uact=5&oq=gutal&gs_lcp=Cgdnd3Mtd2l6EAMyCggAEIAEEIcCEBQyBQguEIAEMgUIABCABDIFCAAQgAQyBQgAEIAEMgUIABCABDIFCAAQgAQyBwgAEIAEEAoyBQgAEIAEMgsILhCABBDHARCvAToHCAAQRxCwAzoKCAAQRxCwAxDJAzoHCAAQsAMQQzoKCAAQ5AIQsAMYAToPCC4Q1AIQyAMQsAMQQxgCOgwILhDIAxCwAxBDGAI6BAgjECc6CgguEMcBENEDEEM6BAguEEM6BAgAEEM6BwguENQCEEM6DgguEIAEEMcBENEDENQCSgQIQRgASgQIRhgBUMoNWJcRYNkSaANwAXgAgAGUAYgBrQWSAQMwLjWYAQCgAQHIARPAAQHaAQYIARABGAnaAQYIAhABGAg&sclient=gws-wiz`;
+        const search = `https://www.google.mn/search?q=site%3A.mn+${query}&ei=lernYor6Caju2roPp_y--AY&ved=0ahUKEwjKmMqZ9KX5AhUot1YBHSe-D28Q4dUDCA0&uact=5&oq=site%3A.mn+huvtsas&gs_lcp=Cgdnd3Mtd2l6EANKBAhBGAFKBAhGGABQrwZY1QdgzgloAnAAeACAAXmIAdwBkgEDMS4xmAEAoAEBwAEB&sclient=gws-wiz`;
 
         const pending_response = await fetch(search);
         const html = await pending_response.text();
@@ -56,7 +56,7 @@ export default async function handler(req, res) {
 
         recursive(HTML_RESULTS_CONTAINER);
 
-        res.status(200).send(temp);
+        res.status(200).json(temp);
     } else {
         res.status(500).send("Error! Method wrong! ");
     }
