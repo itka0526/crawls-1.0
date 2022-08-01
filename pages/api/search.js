@@ -3,7 +3,7 @@ import { load } from "cheerio";
 export default async function handler(req, res) {
     if (req.method === "POST") {
         const { query } = req.body;
-        const search = `https://www.google.com/search?q=${query}&sxsrf=ALiCzsYMkvaQSytaGmNucvjqZ3Ve4_VHvQ%3A1658848312160&ei=OATgYpPVCNbt2roP5uWegAQ&ved=0ahUKEwiT0YbD65b5AhXWtlYBHeayB0AQ4dUDCA4&uact=5&oq=gutal&gs_lcp=Cgdnd3Mtd2l6EAMyCggAEIAEEIcCEBQyBQguEIAEMgUIABCABDIFCAAQgAQyBQgAEIAEMgUIABCABDIFCAAQgAQyBwgAEIAEEAoyBQgAEIAEMgsILhCABBDHARCvAToHCAAQRxCwAzoKCAAQRxCwAxDJAzoHCAAQsAMQQzoKCAAQ5AIQsAMYAToPCC4Q1AIQyAMQsAMQQxgCOgwILhDIAxCwAxBDGAI6BAgjECc6CgguEMcBENEDEEM6BAguEEM6BAgAEEM6BwguENQCEEM6DgguEIAEEMcBENEDENQCSgQIQRgASgQIRhgBUMoNWJcRYNkSaANwAXgAgAGUAYgBrQWSAQMwLjWYAQCgAQHIARPAAQHaAQYIARABGAnaAQYIAhABGAg&sclient=gws-wiz`;
+        const search = `https://www.google.mn/search?q=${query}&sxsrf=ALiCzsYMkvaQSytaGmNucvjqZ3Ve4_VHvQ%3A1658848312160&ei=OATgYpPVCNbt2roP5uWegAQ&ved=0ahUKEwiT0YbD65b5AhXWtlYBHeayB0AQ4dUDCA4&uact=5&oq=gutal&gs_lcp=Cgdnd3Mtd2l6EAMyCggAEIAEEIcCEBQyBQguEIAEMgUIABCABDIFCAAQgAQyBQgAEIAEMgUIABCABDIFCAAQgAQyBwgAEIAEEAoyBQgAEIAEMgsILhCABBDHARCvAToHCAAQRxCwAzoKCAAQRxCwAxDJAzoHCAAQsAMQQzoKCAAQ5AIQsAMYAToPCC4Q1AIQyAMQsAMQQxgCOgwILhDIAxCwAxBDGAI6BAgjECc6CgguEMcBENEDEEM6BAguEEM6BAgAEEM6BwguENQCEEM6DgguEIAEEMcBENEDENQCSgQIQRgASgQIRhgBUMoNWJcRYNkSaANwAXgAgAGUAYgBrQWSAQMwLjWYAQCgAQHIARPAAQHaAQYIARABGAnaAQYIAhABGAg&sclient=gws-wiz`;
 
         const pending_response = await fetch(search);
         const html = await pending_response.text();
