@@ -25,16 +25,16 @@ export default function Home() {
                         <span className=" text-violet-500 text-8xl">S</span>
                     </div>
                     <Search setResults={setResults} />
-                    <div className="w-full grid grid-flow-row ">
-                        {results.map(({ url, title }, index) => (
+                    <div className="w-full grid grid-flow-row max-h-96 overflow-y-auto">
+                        {results.map(({ link, text }, index) => (
                             <a
-                                href={url}
+                                href={link}
                                 className=" my-2"
                                 target={"_blank"}
                                 key={`link-${index}`}
                                 rel="noopener noreferrer"
                             >
-                                <span className=" text-blue-500">{title}</span>
+                                <span className=" text-blue-500">{text}</span>
                             </a>
                         ))}
                     </div>
