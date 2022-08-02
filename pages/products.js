@@ -5,11 +5,11 @@ export default function Products({ products }) {
         <div className="w-full h-[calc(100vh - 16rem)] flex max-lg:pt-0 max-lg:justify-center justify-center p-4 flex-wrap  ">
             {products.map(({ product_name, link }, index) => (
                 <span
-                    className="block grow-0 basis-1/5 max-lg:basis-full flex-shrink-0 m-1 p-6 max-w-sm bg-white rounded-lg border border-gray-200 shadow-md hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 cursor-pointer"
+                    className="block grow-0 basis-1/5 max-lg:basis-full flex-shrink-0 m-1 p-6 max-w-sm bg-white rounded-lg border border-gray-200 shadow-md hover:bg-gray-100 cursor-pointer"
                     key={`product-${product_name}-${index}`}
                 >
                     <Link href={`/product/${link}`}>
-                        <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                        <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900">
                             {product_name}
                         </h5>
                     </Link>

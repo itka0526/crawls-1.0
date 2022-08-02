@@ -10,8 +10,8 @@ export default function Product({ results }) {
         <div className="w-full h-[calc(100vh - 16rem)] flex max-lg:pt-0 max-lg:justify-center p-4 flex-wrap  ">
             {array.map(({ website, link }, index) => (
                 <Link href={link} key={`website-${website}-${index}`}>
-                    <a className="block grow lg:mr-4 mt-4 p-6 max-w-sm bg-white rounded-lg border border-gray-200 shadow-md hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
-                        <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                    <a className="block  lg:mr-4 mt-4 p-6 max-w-sm bg-white rounded-lg border border-gray-200 shadow-md hover:bg-gray-100">
+                        <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900">
                             {website}
                         </h5>
                     </a>
