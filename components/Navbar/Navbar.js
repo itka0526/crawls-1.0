@@ -16,22 +16,23 @@ function MobileNav({ open, setOpen }) {
             } transition-transform duration-300 ease-in-out filter drop-shadow-md `}
         >
             <div className="flex items-center justify-center filter drop-shadow-md bg-white h-16">
-                <a className="text-xl font-semibold" href="/">
-                    CRAWLS
-                </a>
+                <Link href="/">
+                    <a className="text-xl font-semibold">CRAWLS</a>
+                </Link>
             </div>
             <div className="flex flex-col ml-4">
-                <a
-                    className="text-xl font-medium my-4"
-                    href="/products"
-                    onClick={() =>
-                        setTimeout(() => {
-                            setOpen(!open);
-                        }, 100)
-                    }
-                >
-                    Products
-                </a>
+                <Link href="/products">
+                    <a
+                        className="text-xl font-medium my-4"
+                        onClick={() =>
+                            setTimeout(() => {
+                                setOpen(!open);
+                            }, 100)
+                        }
+                    >
+                        Products
+                    </a>
+                </Link>
             </div>
         </div>
     );
