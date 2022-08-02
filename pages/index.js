@@ -27,6 +27,7 @@ export default function Home() {
                             <span className="text-violet-500">S</span>
                             <div className="absolute lg:-right-8 -right-4 lg:-top-16 -top-8">
                                 <Image
+                                    alt="spider"
                                     src={SpiderIcon}
                                     width={56}
                                     height={56}

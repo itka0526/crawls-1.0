@@ -1,4 +1,5 @@
 import queryGoogleForProduct from "../../lib/queryGoogleForProduct";
+import Link from "next/link";
 
 export default function Product({ results }) {
     results.length === 0
@@ -7,15 +8,16 @@ export default function Product({ results }) {
     return (
         <div className="w-full h-[calc(100vh - 16rem)] flex max-lg:pt-0 max-lg:justify-center p-4 flex-wrap  ">
             {results.map(({ website, link }, index) => (
-                <a
-                    key={`website-${website}-${index}`}
-                    href={link}
-                    class="block grow lg:mr-4 mt-4 p-6 max-w-sm bg-white rounded-lg border border-gray-200 shadow-md hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
-                >
-                    <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                        {website}
-                    </h5>
-                </a>
+                <Link href={link}>
+                    <a
+                        key={`website-${website}-${index}`}
+                        className="block grow lg:mr-4 mt-4 p-6 max-w-sm bg-white rounded-lg border border-gray-200 shadow-md hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
+                    >
+                        <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                            {website}
+                        </h5>
+                    </a>
+                </Link>
             ))}
         </div>
     );

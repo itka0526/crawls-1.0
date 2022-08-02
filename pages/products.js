@@ -9,7 +9,7 @@ export default function Products({ products }) {
                     key={`product-${product_name}-${index}`}
                 >
                     <Link href={`/product/${link}`}>
-                        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                        <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
                             {product_name}
                         </h5>
                     </Link>

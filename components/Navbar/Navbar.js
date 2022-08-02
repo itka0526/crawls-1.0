@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { useState } from "react";
 
 function NavLink({ to, children }) {
@@ -42,9 +43,9 @@ export default function Navbar() {
         <nav className="flex filter drop-shadow-md bg-white px-4 py-4 h-16 items-center w-screen relative z-10 ">
             <MobileNav open={open} setOpen={setOpen} />
             <div className="w-3/12 flex items-center">
-                <a className="text-2xl font-semibold" href="/">
-                    CRAWLS
-                </a>
+                <Link href="/">
+                    <a className="text-2xl font-semibold">CRAWLS</a>
+                </Link>
             </div>
             <div className="w-9/12 flex justify-end items-center">
                 <div
