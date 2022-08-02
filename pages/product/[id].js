@@ -2,12 +2,13 @@ import queryGoogleForProduct from "../../lib/queryGoogleForProduct";
 import Link from "next/link";
 
 export default function Product({ results }) {
-    results.length === 0
-        ? (results = [{ website: "No products were found.", link: "/" }])
-        : results;
+    const array =
+        results.length === 0
+            ? [{ website: "No products were found.", link: "/" }]
+            : results;
     return (
         <div className="w-full h-[calc(100vh - 16rem)] flex max-lg:pt-0 max-lg:justify-center p-4 flex-wrap  ">
-            {results.map(({ website, link }, index) => (
+            {array.map(({ website, link }, index) => (
                 <Link href={link} key={`website-${website}-${index}`}>
                     <a className="block grow lg:mr-4 mt-4 p-6 max-w-sm bg-white rounded-lg border border-gray-200 shadow-md hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
                         <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
@@ -18,6 +19,21 @@ export default function Product({ results }) {
             ))}
         </div>
     );
+}
+
+export async function getStaticProps({ params }) {
+    const query = params.id;
+    const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+    return await (async () => {
+        await delay(5000);
+        const results = await queryGoogleForProduct(query);
+        return {
+            props: {
+                results,
+            },
+        };
+    })();
 }
 
 export async function getStaticPaths() {
@@ -41,6 +57,7 @@ export async function getStaticPaths() {
             const paths = items
                 .map(({ short_description: { html } }) =>
                     html
+                        .replaceAll("/", "-")
                         .split(" ")
                         .filter(
                             (word) =>
@@ -52,29 +69,19 @@ export async function getStaticPaths() {
                     seen.hasOwnProperty(item) ? false : (seen[item] = true)
                 )
                 .filter((item) => item.length > 4 && !regex.test(item))
-                .map((param) => ({
-                    params: {
-                        product_model_number: `${param.replace("/", "\\")}`,
-                    },
-                }));
+                .map((x) => ({ params: { id: x } }));
 
+            console.log(paths);
             return {
                 paths,
                 fallback: false, // can also be true or 'blocking'
             };
+        } else {
+            console.log("pending request failed");
+            throw "failed to build static paths";
         }
     } catch (error) {
         console.error("Something went wrong when building paths. :/", error);
-        return {
-            paths: [],
-            fallback: false, // can also be true or 'blocking'
-        };
+        throw "failed to build static paths";
     }
-}
-
-export async function getStaticProps({ params: { product_model_number } }) {
-    const results = await queryGoogleForProduct(product_model_number);
-    return {
-        props: { results },
-    };
 }

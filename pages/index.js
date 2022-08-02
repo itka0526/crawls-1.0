@@ -17,7 +17,7 @@ export default function Home() {
 
             <main className="w-screen  flex justify-center items-center h-full lg:pb-48 pb-64 max-lg:px-4">
                 <div className="w-full lg:w-1/2 ">
-                    <div className="flex gap-2 justify-center my-8  text-4xl lg:text-8xl">
+                    <div className="flex gap-2 justify-center my-8 text-5xl lg:text-8xl">
                         <span className=" text-red-500 ">C</span>
                         <span className=" text-orange-500 ">R</span>
                         <span className=" text-yellow-500">A</span>

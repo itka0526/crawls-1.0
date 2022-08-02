@@ -32,8 +32,6 @@ export async function getStaticProps() {
                 },
             } = response;
 
-            var seen = {};
-
             const regex =
                 /(samsung)|(hitachi)|(mcdodo)|(gorenje)|(remax)|(tasel-pro)|(promate)|(baseus)|(tanita)|(2USB\/2.4A)|(5V\/2.4A)|(VNM\r\n)/i;
 
@@ -52,7 +50,7 @@ export async function getStaticProps() {
                 .filter(({ links }) => links.length !== 0)
                 .map(({ name, links }) => ({
                     product_name: name,
-                    link: links[0],
+                    link: links[0].replaceAll("/", "-"),
                 }));
 
             return { props: { products } };
