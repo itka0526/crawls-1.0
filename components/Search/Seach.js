@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export default function Search({ setResults }) {
     const [value, setValue] = useState("");
@@ -24,7 +24,7 @@ export default function Search({ setResults }) {
     };
 
     return (
-        <form className="w-full relative" onSubmit={handleSubmit}>
+        <form className="w-full relative " onSubmit={handleSubmit}>
             <input
                 className="w-full h-10 px-4 border rounded-md border-black text-xl "
                 onChange={handleChange}
