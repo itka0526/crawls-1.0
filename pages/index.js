@@ -8,16 +8,16 @@ export default function Home() {
     const [results, setResults] = useState([]);
 
     return (
-        <div className=" h-screen w-screen">
+        <>
             <Head>
-                <title>Crawler Crawler Crawler</title>
+                <title>Кравлер Кравлер Кравлер</title>
                 <meta name="description" content="I am Crawler." />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
 
-            <main className="w-screen  flex justify-center items-center h-full lg:pb-48 pb-64 max-lg:px-4">
-                <div className="w-full lg:w-1/2 ">
-                    <div className="flex gap-2 justify-center my-8 text-5xl lg:text-8xl">
+            <main className="flex h-full w-screen items-center justify-center max-lg:px-4">
+                <div className="mt-[22%] w-full lg:mt-[11%] lg:w-1/2">
+                    <div className="my-8 flex justify-center gap-2 text-5xl lg:text-8xl">
                         <span className=" text-red-500 ">C</span>
                         <span className=" text-orange-500 ">R</span>
                         <span className=" text-yellow-500">A</span>
@@ -25,7 +25,7 @@ export default function Home() {
                         <span className=" text-indigo-500">L</span>
                         <div className=" relative flex ">
                             <span className="text-violet-500">S</span>
-                            <div className="absolute lg:-right-8 -right-4 lg:-top-16 -top-8">
+                            <div className="absolute -right-4 -top-8 lg:-right-8 lg:-top-16">
                                 <Image
                                     alt="spider"
                                     src={SpiderIcon}
@@ -36,7 +36,7 @@ export default function Home() {
                         </div>
                     </div>
                     <Search setResults={setResults} />
-                    <div className="w-full grid grid-flow-row max-h-96 overflow-y-auto">
+                    <div className="grid max-h-96 w-full grid-flow-row overflow-y-auto">
                         {results.map(({ link, text }, index) => (
                             <a
                                 href={link}
@@ -51,6 +51,6 @@ export default function Home() {
                     </div>
                 </div>
             </main>
-        </div>
+        </>
     );
 }

@@ -6,6 +6,10 @@ module.exports = {
     ],
     theme: {
         extend: {
+            colors: {
+                "black-rgba": "rgba(0, 0, 0, 0.1)",
+                "dark-black-rgba": "rgba(0, 0, 0, 0.5)",
+            },
             screens: {
                 "max-2xl": { max: "1535px" },
                 // => @media (max-width: 1535px) { ... }

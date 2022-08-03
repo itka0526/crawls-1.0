@@ -2,10 +2,10 @@ import Link from "next/link";
 
 export default function Products({ products }) {
     return (
-        <div className="w-full h-[calc(100vh - 16rem)] flex max-lg:pt-0 max-lg:justify-center justify-center p-4 flex-wrap  ">
+        <div className="h-[calc(100vh - 16rem)] flex w-full flex-wrap justify-center p-4 max-lg:justify-center max-lg:pt-0  ">
             {products.map(({ product_name, link }, index) => (
                 <span
-                    className="block grow-0 basis-1/5 max-lg:basis-full flex-shrink-0 m-1 p-6 max-w-sm bg-white rounded-lg border border-gray-200 shadow-md hover:bg-gray-100 cursor-pointer"
+                    className="m-1 block max-w-sm flex-shrink-0 grow-0 basis-1/5 cursor-pointer rounded-lg border border-gray-200 bg-white p-6 shadow-md hover:bg-gray-100 max-lg:basis-full"
                     key={`product-${product_name}-${index}`}
                 >
                     <Link href={`/product/${link}`}>

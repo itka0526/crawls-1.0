@@ -1,82 +1,75 @@
 import Link from "next/link";
 import { useState } from "react";
+import Categories from "../Categories/Categories";
+import Modal from "../Modal/Modal";
+import useSWR from "swr";
+import MobileNav from "./MobileNavbar";
+import { useRouter } from "next/router";
 
-function NavLink({ to, children }) {
-    return (
-        <a href={to} className={`mx-4`}>
-            {children}
-        </a>
-    );
-}
-function MobileNav({ open, setOpen }) {
-    return (
-        <div
-            className={`fixed top-0 left-0 h-screen w-screen  bg-white transform ${
-                open ? "-translate-x-0" : "-translate-x-full"
-            } transition-transform duration-300 ease-in-out filter drop-shadow-md `}
-        >
-            <div className="flex items-center justify-center filter drop-shadow-md bg-white h-16">
-                <Link href="/">
-                    <a className="text-xl font-semibold">CRAWLS</a>
-                </Link>
-            </div>
-            <div className="flex flex-col ml-4">
-                <Link href="/products">
-                    <a
-                        className="text-xl font-medium my-4"
-                        onClick={() =>
-                            setTimeout(() => {
-                                setOpen(!open);
-                            }, 100)
-                        }
-                    >
-                        Products
-                    </a>
-                </Link>
-            </div>
-        </div>
-    );
-}
+const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
 export default function Navbar() {
     const [open, setOpen] = useState(false);
-    return (
-        <nav className="flex filter drop-shadow-md bg-white px-4 py-4 h-16 items-center w-screen relative z-10 ">
-            <MobileNav open={open} setOpen={setOpen} />
-            <div className="w-3/12 flex items-center">
-                <Link href="/">
-                    <a className="text-2xl font-semibold">CRAWLS</a>
-                </Link>
-            </div>
-            <div className="w-9/12 flex justify-end items-center">
-                <div
-                    className="z-50 flex relative w-8 h-8 flex-col justify-between items-center md:hidden"
-                    onClick={() => {
-                        setOpen(!open);
-                    }}
-                >
-                    {/* hamburger button */}
-                    <span
-                        className={`h-1 w-full bg-black rounded-lg transform transition duration-300 ease-in-out ${
-                            open ? "rotate-45 translate-y-3.5" : ""
-                        }`}
-                    />
-                    <span
-                        className={`h-1 w-full bg-black rounded-lg transition-all duration-300 ease-in-out ${
-                            open ? "w-0" : "w-full"
-                        }`}
-                    />
-                    <span
-                        className={`h-1 w-full bg-black rounded-lg transform transition duration-300 ease-in-out ${
-                            open ? "-rotate-45 -translate-y-3.5" : ""
-                        }`}
-                    />
-                </div>
+    const [openCategories, setOpenCategories] = useState(false);
 
-                <div className="hidden md:flex">
-                    <NavLink to="/products">PRODUCTS</NavLink>
+    const handleCategories = () => setOpenCategories((prev) => !prev);
+    const handleCloseCategories = () => setOpenCategories(false);
+    const router = useRouter();
+
+    const { data, error } = useSWR("/api/getmenu", fetcher);
+
+    if (error) {
+        router.reload(window.location.pathname);
+    }
+
+    return (
+        <>
+            <Modal state={openCategories} close={handleCloseCategories}>
+                <Categories categoryTree={data} />
+            </Modal>
+            <nav className="relative z-10 flex h-16 w-screen items-center bg-white px-4 py-4 drop-shadow-md filter ">
+                <MobileNav open={open} setOpen={setOpen} />
+                <div className="flex w-3/12 items-center">
+                    <Link href="/">
+                        <a className="text-2xl font-semibold">CRAWLS</a>
+                    </Link>
                 </div>
-            </div>
-        </nav>
+                <div className="flex w-9/12 items-center justify-end">
+                    <div
+                        className="relative z-50 flex h-8 w-8 flex-col items-center justify-between md:hidden"
+                        onClick={() => {
+                            setOpen(!open);
+                        }}
+                    >
+                        {/* hamburger button */}
+                        <span
+                            className={`h-1 w-full transform rounded-lg bg-black transition duration-300 ease-in-out ${
+                                open ? "translate-y-3.5 rotate-45" : ""
+                            }`}
+                        />
+                        <span
+                            className={`h-1 w-full rounded-lg bg-black transition-all duration-300 ease-in-out ${
+                                open ? "w-0" : "w-full"
+                            }`}
+                        />
+                        <span
+                            className={`h-1 w-full transform rounded-lg bg-black transition duration-300 ease-in-out ${
+                                open ? "-translate-y-3.5 -rotate-45" : ""
+                            }`}
+                        />
+                    </div>
+
+                    <div className="hidden md:flex" onClick={handleCategories}>
+                        <div className="mx-4">CATEGORIES</div>
+                    </div>
+
+                    <div className="hidden md:flex">
+                        <Link href="/products">
+                            <a className="mx-4">PRODUCTS</a>
+                        </Link>
+                    </div>
+                </div>
+            </nav>
+        </>
     );
 }
