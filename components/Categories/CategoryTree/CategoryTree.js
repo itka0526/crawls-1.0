@@ -2,9 +2,11 @@ import { useEffect, useState } from "react";
 import Branch from "./Branch";
 import SubBranch from "./SubBranch";
 
-export default function CategoryTree({ includedInTheTree }) {
+export default function CategoryTree({ includedInTheTree, handleTreeState }) {
     const [branches, setBranches] = useState([]);
     const [activeSubBranch, setActiveSubBranch] = useState(0);
+
+    const closeTree = () => handleTreeState(false);
 
     useEffect(() => {
         if (includedInTheTree && includedInTheTree.length > 0) {
@@ -36,6 +38,7 @@ export default function CategoryTree({ includedInTheTree }) {
                     ({ id, main_branch, ...rest }, index) =>
                         main_branch && (
                             <Branch
+                                closeTree={closeTree}
                                 id={id}
                                 setNewActiveBranch={setNewActiveBranch}
                                 active={activeSubBranch === id}
@@ -51,6 +54,7 @@ export default function CategoryTree({ includedInTheTree }) {
                         !main_branch &&
                         activeSubBranch === branch_identifier && (
                             <SubBranch
+                                closeTree={closeTree}
                                 key={`sub-branch-${index}-${branch_identifier}`}
                                 data={subBranches}
                             />

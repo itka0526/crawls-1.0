@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import CategoryTree from "./CategoryTree/CategoryTree";
 
-export default function Categories({ categoryTree }) {
+export default function Categories({ categoryTree, handleTreeState }) {
     const [includedInTheTree, setIncludedInTheTree] = useState([]);
 
     useEffect(() => {
@@ -20,7 +20,10 @@ export default function Categories({ categoryTree }) {
 
     return (
         <div className="w-[75vw]  transition-[heigth] ">
-            <CategoryTree includedInTheTree={includedInTheTree} />
+            <CategoryTree
+                includedInTheTree={includedInTheTree}
+                handleTreeState={handleTreeState}
+            />
         </div>
     );
 }

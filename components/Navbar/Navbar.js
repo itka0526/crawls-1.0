@@ -25,7 +25,10 @@ export default function Navbar() {
     return (
         <>
             <Modal state={openCategories} close={handleCloseCategories}>
-                <Categories categoryTree={data} />
+                <Categories
+                    categoryTree={data}
+                    handleTreeState={setOpenCategories}
+                />
             </Modal>
             <nav className="relative z-10 flex h-16 w-screen items-center bg-white px-4 py-4 drop-shadow-md filter ">
                 <MobileNav open={open} setOpen={setOpen} />
