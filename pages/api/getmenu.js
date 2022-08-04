@@ -1,4 +1,4 @@
-import getMenu from "../../lib/getMenu";
+import getMenu from "../../lib/getMenu/getMenu";
 
 export default async function handler(req, res) {
     if (req.method === "GET") {

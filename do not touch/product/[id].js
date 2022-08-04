@@ -7,10 +7,10 @@ export default function Product({ results }) {
             ? [{ website: "No products were found.", link: "/" }]
             : results;
     return (
-        <div className="w-full h-[calc(100vh - 16rem)] flex max-lg:pt-0 max-lg:justify-center p-4 flex-wrap  ">
+        <div className="h-[calc(100vh - 16rem)] flex w-full flex-wrap p-4 max-lg:justify-center max-lg:pt-0  ">
             {array.map(({ website, link }, index) => (
                 <Link href={link} key={`website-${website}-${index}`}>
-                    <a className="block  lg:mr-4 mt-4 p-6 max-w-sm bg-white rounded-lg border border-gray-200 shadow-md hover:bg-gray-100">
+                    <a className="mt-4  block max-w-sm rounded-lg border border-gray-200 bg-white p-6 shadow-md hover:bg-gray-100 lg:mr-4">
                         <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900">
                             {website}
                         </h5>
@@ -78,7 +78,7 @@ export async function getStaticPaths() {
             };
         } else {
             console.log("pending request failed");
-            throw "failed to build static paths";
+            throw Error("failed to build static paths");
         }
     } catch (error) {
         console.error("Something went wrong when building paths. :/", error);

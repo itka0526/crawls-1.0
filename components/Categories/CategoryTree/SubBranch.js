@@ -20,39 +20,28 @@ export default function SubBranch({ data, closeTree }) {
 
     return (
         <div className=" flex flex-wrap justify-start px-4 py-1">
-            {data.map(
-                ({
-                    name,
-                    id,
-                    url_path,
-                    url_suffix,
-                    children: subSubBranches,
-                }) => (
-                    <div
-                        className="m-2 flex flex-shrink-0 basis-64 flex-col  "
-                        key={`subBranch-${id}`}
-                    >
-                        <Title
-                            name={name}
-                            href={`/category/${url_path}${url_suffix}`}
-                        />
-                        <div>
-                            {subSubBranches.map(
-                                ({ name: subSubBranchName, id }) => (
-                                    <Title
-                                        key={`subSubBranch-${id}`}
-                                        name={subSubBranchName}
-                                        href={`/category/${url_path}${url_suffix}`}
-                                        styles={{
-                                            container: "pl-1 cursor-pointer",
-                                        }}
-                                    />
-                                )
-                            )}
-                        </div>
+            {data.map(({ name, id, url_path, children: subSubBranches }) => (
+                <div
+                    className="m-2 flex flex-shrink-0 basis-64 flex-col  "
+                    key={`subBranch-${id}`}
+                >
+                    <Title name={name} href={`/category/${url_path}`} />
+                    <div>
+                        {subSubBranches.map(
+                            ({ name: subSubBranchName, id }) => (
+                                <Title
+                                    key={`subSubBranch-${id}`}
+                                    name={subSubBranchName}
+                                    href={`/category/${url_path}`}
+                                    styles={{
+                                        container: "pl-1 cursor-pointer",
+                                    }}
+                                />
+                            )
+                        )}
                     </div>
-                )
-            )}
+                </div>
+            ))}
         </div>
     );
 }

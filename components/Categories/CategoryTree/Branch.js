@@ -5,11 +5,7 @@ export default function Branch({
     active,
     setNewActiveBranch,
     closeTree,
-    data: {
-        name: BranchName,
-        url_path: BranchURLPath,
-        url_suffix: BranchURLSuffix,
-    },
+    data: { name: BranchName, url_path: BranchURLPath },
 }) {
     const activeStyles = active ? "bg-slate-100 text-blue-400" : "";
     return (
@@ -17,7 +13,7 @@ export default function Branch({
             onMouseEnter={() => setNewActiveBranch(id)}
             className={`py-1 px-3 ${activeStyles} my-[0.125rem] flex cursor-pointer items-center`}
         >
-            <Link href={`/category/${BranchURLPath}${BranchURLSuffix}`}>
+            <Link href={`/category/${BranchURLPath}`}>
                 <a onClick={closeTree}>{BranchName}</a>
             </Link>
         </div>
