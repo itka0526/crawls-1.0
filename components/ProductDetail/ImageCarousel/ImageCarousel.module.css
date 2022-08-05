@@ -1,0 +1,53 @@
+/*NOTE: there are some CSS styles written in the global.css*/
+.custom-carousel {
+    display: grid;
+    grid-template-rows: 1fr 100px;
+    grid-template-columns: 100%;
+}
+
+.custom-carousel
+    > div[class="carousel carousel-slider"]
+    > div[class="slider-wrapper axis-horizontal"] {
+    height: 100%;
+    width: 100%;
+}
+.custom-carousel {
+    user-select: none;
+}
+
+.custom-carousel
+    div[data-identifier="main-carousel-controls-identifier"]:hover {
+    transform: scale(1.05);
+}
+
+.custom-carousel div[class="thumbs-wrapper axis-vertical"] {
+    margin: 1rem 0 0 0 !important;
+}
+
+.custom-carousel div[class="thumbs-wrapper axis-vertical"] > * {
+    margin-bottom: 0 !important;
+}
+
+.custom-carousel div[class="thumbs-wrapper axis-vertical"] li[class="thumb"] {
+    border: 3px solid #c4c4c4 !important;
+    border-radius: 0.125rem;
+}
+
+.custom-carousel div[data-identifier="placeholder-box-to-position-correctly"] {
+    content: "";
+    margin-left: 10.5rem;
+    width: 100%;
+    height: 100%;
+}
+
+.custom-carousel
+    div[class="thumbs-wrapper axis-vertical"]
+    li[class="thumb selected"] {
+    border: 3px solid #000000 !important;
+    border-radius: 0.125rem;
+}
+
+.custom-carousel div[class="slider-wrapper axis-horizontal"] {
+    border: 0.3px solid #c4c4c4;
+    border-radius: 0.25rem;
+}

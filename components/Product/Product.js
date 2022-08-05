@@ -1,3 +1,5 @@
+import Image from "next/image";
+import Link from "next/link";
 import { string, shape, number, any, array, arrayOf } from "prop-types";
 
 export default function Product({ product }) {
@@ -13,28 +15,32 @@ export default function Product({ product }) {
                 amount: { value },
             },
         },
+        url_key,
     } = product;
-    console.log(product);
     const thumbail = small_image.url || media_gallery[0].file_small;
+
     return (
         <div className="m-1 grid grid-rows-[3rem_1fr_2rem_2rem_2rem] rounded-sm border px-2 ">
             <div>
                 <span>{brand_name}</span>
             </div>
             <div className="mb-4 w-full">
-                <div className="h-44 w-full">
-                    <img
-                        alt="image-product"
-                        className="h-full w-full object-contain"
-                        src={thumbail}
-                    ></img>
-                </div>
+                <Link href={`/product/${url_key}`}>
+                    <div className="relative h-44 w-full">
+                        <Image
+                            alt="image-product"
+                            layout="fill"
+                            objectFit="contain"
+                            src={thumbail}
+                        />
+                    </div>
+                </Link>
             </div>
             <div>
                 <span className="font-bold">{name}</span>
             </div>
             <div className="w-full overflow-hidden text-ellipsis whitespace-nowrap text-sm">
-                <span>{html.replaceAll(/(<p>)|(<\/p>)/g)}</span>
+                <span>{html.replaceAll(/(<p>)|(<\/p>)/g, "")}</span>
             </div>
             <div className="flex">
                 <span>{value.toLocaleString()}₮</span>

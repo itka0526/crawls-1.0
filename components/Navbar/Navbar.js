@@ -63,7 +63,7 @@ export default function Navbar() {
                     </div>
 
                     <div className="hidden md:flex" onClick={handleCategories}>
-                        <div className="mx-4">CATEGORIES</div>
+                        <div className="mx-4">АНГИЛАЛ</div>
                     </div>
 
                     <div className="hidden md:flex">

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Product from "../../components/Product/Product";
-import getAllCategoryPaths from "../../lib/getAllCategoryPaths";
+import getCategoryPaths from "../../lib/getCategoryPaths";
 import getCategoryIdFromURL from "../../lib/getCategoryIdFromURL";
 import getCategoryItems from "../../lib/getCategoryItems";
 import getIncludeInTheMenu from "../../lib/getMenu/getIncludeInTheMenu";
@@ -15,27 +15,11 @@ export default function CategoryItems({ data }) {
             ))}
         </section>
     );
-    // return (
-    //     <div className=" grid grid-rows-[1fr] p-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 max-lg:pt-0">
-    //         {data.products.items.map(({ name, url_key }, index) => (
-    //             <span
-    //                 className="m-1 block max-w-sm  cursor-pointer rounded-md border border-gray-200 bg-white p-6 shadow-md hover:bg-gray-100 "
-    //                 key={`product-${name}-${index}`}
-    //             >
-    //                 <Link href={`/product/${url_key}`}>
-    //                     <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900">
-    //                         {name}
-    //                     </h5>
-    //                 </Link>
-    //             </span>
-    //         ))}
-    //     </div>
-    // );
 }
 
 export async function getStaticPaths() {
     const listOfCategories = await getIncludeInTheMenu(2);
-    const paths = getAllCategoryPaths(listOfCategories, "category_id");
+    const paths = getCategoryPaths(listOfCategories, "category_id");
     return {
         paths,
         fallback: false,
