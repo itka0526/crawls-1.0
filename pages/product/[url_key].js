@@ -69,7 +69,7 @@ export async function getStaticPaths() {
         path.join(process.cwd(), "allCategoryItemData.json")
     );
 
-    const paths = JSON.parse(buffer);
+    const paths = getCategoryItemPaths(JSON.parse(buffer), "url_key");
 
     return { paths, fallback: false };
 }
