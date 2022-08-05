@@ -65,11 +65,13 @@ export async function getStaticPaths() {
 
     // console.log(paths);
 
-    const buffer = await fs.readFile(
+    const cachedFile = await fs.readFile(
         path.join(process.cwd(), "allCategoryItemData.json")
     );
 
-    const paths = getCategoryItemPaths(JSON.parse(buffer), "url_key");
+    const allCategoryItemData = JSON.parse(cachedFile);
+
+    const paths = getCategoryItemPaths(allCategoryItemData, "url_key");
 
     return { paths, fallback: false };
 }
