@@ -23,54 +23,60 @@ export default function ProductDetail({ results }) {
 }
 
 export async function getStaticPaths() {
-    const listOfCategories = await getIncludeInTheMenu(2);
-    const categoryPaths = getCategoryPaths(listOfCategories, "category_id");
-    const categoryIdentifiers = await Promise.all(
-        categoryPaths.map(async (category_complete_url_path) => {
-            const {
-                params: { category_id },
-            } = category_complete_url_path;
-            const nominWeirdURLsuffix = ".html";
-            const resolveURL = category_id.join("/") + nominWeirdURLsuffix;
-            return await getCategoryIdFromURL(resolveURL);
-        })
-    );
-    const allCategoryItemData = await Promise.all(
-        categoryIdentifiers.map(async (category_id, index) => {
-            const {
-                data: {
-                    urlResolver: { id: resolvedID },
-                },
-            } = category_id;
-            const variables = {
-                currentPage: 1,
-                filters: {
-                    category_id: {
-                        eq: `${resolvedID}`,
-                    },
-                },
-                pageSize: 50,
-            };
-            console.log(`fetching: ${index}`);
-            return await getCategoryItems(variables, true);
-        })
+    // const listOfCategories = await getIncludeInTheMenu(2);
+    // const categoryPaths = getCategoryPaths(listOfCategories, "category_id");
+    // const categoryIdentifiers = await Promise.all(
+    //     categoryPaths.map(async (category_complete_url_path) => {
+    //         const {
+    //             params: { category_id },
+    //         } = category_complete_url_path;
+    //         const nominWeirdURLsuffix = ".html";
+    //         const resolveURL = category_id.join("/") + nominWeirdURLsuffix;
+    //         return await getCategoryIdFromURL(resolveURL);
+    //     })
+    // );
+    // const allCategoryItemData = await Promise.all(
+    //     categoryIdentifiers.map(async (category_id, index) => {
+    //         const {
+    //             data: {
+    //                 urlResolver: { id: resolvedID },
+    //             },
+    //         } = category_id;
+    //         const variables = {
+    //             currentPage: 1,
+    //             filters: {
+    //                 category_id: {
+    //                     eq: `${resolvedID}`,
+    //                 },
+    //             },
+    //             pageSize: 50,
+    //         };
+    //         console.log(`fetching: ${index}`);
+    //         return await getCategoryItems(variables, true);
+    //     })
+    // );
+
+    // await fs.writeFile(
+    //     path.join(process.cwd(), "temporaryjsoncontainer.json"),
+    //     JSON.stringify(allCategoryItemData)
+    // );
+
+    // const paths = getCategoryItemPaths(allCategoryItemData, "url_key");
+
+    // console.log(paths);
+
+    const buffer = await fs.readFile(
+        path.join(process.cwd(), "allCategoryItemData.json")
     );
 
-    await fs.writeFile(
-        path.join(process.cwd(), "temporaryjsoncontainer.json"),
-        JSON.stringify(allCategoryItemData)
-    );
-
-    const paths = getCategoryItemPaths(allCategoryItemData, "url_key");
-
-    console.log(paths);
+    const paths = JSON.parse(buffer);
 
     return { paths, fallback: false };
 }
 
 export async function getStaticProps({ params: { url_key } }) {
     const cachedAllCategoryItemData = await fs.readFile(
-        path.join(process.cwd(), "temporaryjsoncontainer.json")
+        path.join(process.cwd(), "allCategoryItemData.json")
     );
     const parsedCachedAllCategoryItemData = JSON.parse(
         cachedAllCategoryItemData
