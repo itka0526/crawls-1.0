@@ -30,7 +30,7 @@ export default function CategoryItems({
 export async function getStaticPaths() {
     if (process.env.INITIATED === "FALSE") {
         return {
-            paths: [{ params: { category_id: `demo/demo1/demo2`.split("/") } }],
+            paths: [],
             fallback: false,
         };
     }
