@@ -7,10 +7,11 @@ export default async function handler(req, res) {
     if (req.method === "POST") {
         try {
             if (req.body.password === process.env.PASSWORD) {
-                const results = await getMenu(2);
+                // const results = await getMenu(2);
+                console.log(process.env.NODE_ENV);
                 // await DatabaseClient.category.deleteMany();
-                await insertCategoriesFunction(results.data);
-                console.log("====SUCCESSFULLY WROTE CATEGORIES====\n");
+                // // await insertCategoriesFunction(results.data);
+                // console.log("====SUCCESSFULLY WROTE CATEGORIES====\n");
                 // await insertProductsFunction();
                 console.log("====SUCCESFULLY WROTE PRODUCTS  ====");
                 return res.status(400).send("Please welcome.");

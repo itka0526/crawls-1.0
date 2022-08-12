@@ -1,9 +1,6 @@
 import MetaTags from "../../components/DefaultMetaTags/MetaTags";
 import Product from "../../components/Product/Product";
 import DatabaseClient from "../../lib/DatabaseClient";
-import getMenu from "../../lib/getMenu/getMenu";
-import insertCategoriesFunction from "../../lib/SQL generator functions/insertCategories/insertCategoriesFunction";
-import insertProductsFunction from "../../lib/SQL generator functions/insertProducts/insertProductsFunction";
 
 export default function CategoryItems({
     products,
@@ -37,13 +34,6 @@ export async function getStaticPaths() {
             fallback: false,
         };
     }
-
-    const results = await getMenu(2);
-    await DatabaseClient.category.deleteMany();
-    await insertCategoriesFunction(results.data);
-    console.log("====SUCCESSFULLY WROTE CATEGORIES====\n");
-    await insertProductsFunction();
-    console.log("====SUCCESFULLY WROTE PRODUCTS  ====");
 
     const list = await DatabaseClient.category.findMany({
         where: {
