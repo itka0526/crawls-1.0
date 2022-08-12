@@ -3,7 +3,7 @@ import getMenu from "../../lib/getMenu/getMenu";
 import insertCategoriesFunction from "../../lib/SQL generator functions/insertCategories/insertCategoriesFunction.js";
 import insertProductsFunction from "../../lib/SQL generator functions/insertProducts/insertProductsFunction";
 
-export default async (req, res) => {
+export default async function handler(req, res) {
     if (req.method === "POST") {
         try {
             if (req.body.password === process.env.PASSWORD) {
@@ -26,4 +26,4 @@ export default async (req, res) => {
     } else {
         return res.status(400).send("Error! Method wrong.");
     }
-};
+}

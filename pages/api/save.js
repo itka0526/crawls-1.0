@@ -2,7 +2,7 @@ import getCategoryIdFromURL from "../../lib/getCategoryIdFromURL";
 import getCategoryPaths from "../../lib/getCategoryPaths";
 import getIncludeInTheMenu from "../../lib/getMenu/getIncludeInTheMenu";
 
-export default async (req, res) => {
+export default async function handler(req, res) {
     const listOfCategories = await getIncludeInTheMenu(2);
     const paths = getCategoryPaths(listOfCategories, "category_id");
 
@@ -22,4 +22,4 @@ export default async (req, res) => {
         return resolvedID;
     });
     res.json(results);
-};
+}

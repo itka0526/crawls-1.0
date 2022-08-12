@@ -1,7 +1,7 @@
 import DatabaseClient from "../../lib/DatabaseClient";
 import getCategoryItems from "../../lib/getCategoryItems";
 
-export default async (req, res) => {
+export default async function handler(req, res) {
     if (req.method === "POST") {
         try {
             if (req.body.password === process.env.PASSWORD) {
@@ -85,4 +85,4 @@ export default async (req, res) => {
     } else {
         return res.status(400).send("Error! Method wrong.");
     }
-};
+}
