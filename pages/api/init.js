@@ -8,10 +8,10 @@ export default async function handler(req, res) {
         try {
             if (req.body.password === process.env.PASSWORD) {
                 const results = await getMenu(2);
-                await DatabaseClient.category.deleteMany();
+                // await DatabaseClient.category.deleteMany();
                 await insertCategoriesFunction(results.data);
                 console.log("====SUCCESSFULLY WROTE CATEGORIES====\n");
-                await insertProductsFunction();
+                // await insertProductsFunction();
                 console.log("====SUCCESFULLY WROTE PRODUCTS  ====");
                 return res.status(400).send("Please welcome.");
             } else {
