@@ -30,7 +30,8 @@ export default function CategoryItems({
 export async function getStaticPaths() {
     if (process.env.INITIATED === "FALSE") {
         return {
-            params: { category_id: `demo/demo1/demo2`.split("/") },
+            paths: [{ params: { category_id: `demo/demo1/demo2`.split("/") } }],
+            fallback: false,
         };
     }
     const list = await DatabaseClient.category.findMany({
