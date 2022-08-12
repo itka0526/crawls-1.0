@@ -27,6 +27,12 @@ export default function ProductDetail({ results }) {
 }
 
 export async function getStaticPaths() {
+    if (process.env.INITIATED === "FALSE") {
+        return {
+            paths: [{ params: { product_id: "demo" } }],
+            fallback: "blocking",
+        };
+    }
     const categoriesOfProducts = await DatabaseClient.category.findMany({
         select: {
             products: true,
