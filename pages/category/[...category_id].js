@@ -28,6 +28,11 @@ export default function CategoryItems({
 }
 
 export async function getStaticPaths() {
+    if (process.env.INITIATED === "FALSE") {
+        return {
+            params: { category_id: `demo/demo1/demo2`.split("/") },
+        };
+    }
     const list = await DatabaseClient.category.findMany({
         where: {
             include_in_menu: 1,
@@ -51,6 +56,15 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({ params: { category_id } }) {
     const resolvedURL = category_id.join("/");
+    if (process.env.INITIATED === "FALSE") {
+        return {
+            props: {
+                products: [],
+                category_id: 1,
+                category_name: "Demo ",
+            },
+        };
+    }
 
     const [{ products: db_products, name: category_name }] =
         await DatabaseClient.category.findMany({
