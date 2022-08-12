@@ -29,7 +29,7 @@ export default function ProductDetail({ results }) {
 export async function getStaticPaths() {
     if (process.env.INITIATED === "FALSE") {
         return {
-            paths: [{ params: { product_id: "demo" } }],
+            paths: [],
             fallback: "blocking",
         };
     }
