@@ -1,6 +1,7 @@
 import Head from "next/head";
 import Image from "next/image";
 import { useState } from "react";
+import MetaTags from "../components/DefaultMetaTags/MetaTags";
 import Search from "../components/Search/Seach";
 import SpiderIcon from "../public/spider.svg";
 
@@ -10,11 +11,9 @@ export default function Home() {
     return (
         <>
             <Head>
-                <title>Кравлер Кравлер Кравлер</title>
-                <meta name="description" content="I am Crawler." />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-
+            <MetaTags />
             <main className="flex h-full w-screen items-center justify-center max-lg:px-4">
                 <div className="mt-[22%] w-full lg:mt-[11%] lg:w-1/2">
                     <div className="my-8 flex justify-center gap-2 text-5xl lg:text-8xl">

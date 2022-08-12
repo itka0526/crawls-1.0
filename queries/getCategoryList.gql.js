@@ -23,6 +23,7 @@ export default gql`
                     category_icon
                     name
                     position
+                    url_key
                     url_path
                     url_suffix
                 }

@@ -1,31 +1,35 @@
 import Link from "next/link";
+import Categories from "../Categories/Categories";
 
-export default function MobileNav({ open, setOpen }) {
+export default function MobileNav({ open, setOpen, data }) {
+    const close = () => setOpen(false);
     return (
         <div
-            className={`fixed top-0 left-0 h-screen w-screen  transform bg-white ${
-                open ? "-translate-x-0" : "-translate-x-full"
-            } drop-shadow-md filter transition-transform duration-300 ease-in-out `}
+            className={`fixed top-0 left-0 h-screen w-screen  transform bg-transparent ${
+                open ? "translate-x-0" : "translate-x-[calc(-100%-1px)]"
+            } grid grid-cols-[80%,_20%] drop-shadow-md filter transition-transform duration-300 ease-in-out`}
         >
-            <div className="flex h-16 items-center justify-center bg-white drop-shadow-md filter">
-                <Link href="/">
-                    <a className="text-xl font-semibold">CRAWLS</a>
-                </Link>
+            <div className="h-full overflow-hidden bg-white">
+                <div className=" flex h-[62px] items-center justify-center bg-white drop-shadow-md filter">
+                    <Link href="/">
+                        <a className="text-xl font-semibold">CRAWLS</a>
+                    </Link>
+                </div>
+                <div className=" flex h-full w-full flex-col">
+                    <Categories
+                        mobile
+                        categoryTree={data}
+                        handleTreeState={close}
+                    />
+                </div>
             </div>
-            <div className="ml-4 flex flex-col">
-                <Link href="/products">
-                    <a
-                        className="my-4 text-xl font-medium"
-                        onClick={() =>
-                            setTimeout(() => {
-                                setOpen(!open);
-                            }, 100)
-                        }
-                    >
-                        Products
-                    </a>
-                </Link>
-            </div>
+
+            <div
+                className={`h-full bg-black  ${
+                    !open ? "opacity-0" : "opacity-20"
+                }`}
+                onClick={close}
+            ></div>
         </div>
     );
 }

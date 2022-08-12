@@ -1,25 +1,48 @@
-import Link from "next/link";
+import MetaTags from "../../components/DefaultMetaTags/MetaTags";
 import Product from "../../components/Product/Product";
-import getCategoryPaths from "../../lib/getCategoryPaths";
-import getCategoryIdFromURL from "../../lib/getCategoryIdFromURL";
-import getCategoryItems from "../../lib/getCategoryItems";
-import getIncludeInTheMenu from "../../lib/getMenu/getIncludeInTheMenu";
+import DatabaseClient from "../../lib/DatabaseClient";
 
-export default function CategoryItems({ data }) {
-    const { category, products } = data;
+export default function CategoryItems({
+    products,
+    category_id,
+    category_name,
+}) {
+    //if user navigates to 2nd page call /category pass category_id and pagenumber as argument
+    const meta = {
+        title: `${category_name} - Кравлер`,
+        keywords: products.map(({ name }) => name).join(", "),
+    };
+
+    products.map(({ name }) => name).join(", ");
 
     return (
-        <section className=" grid grid-rows-[1fr] p-2 md:grid-cols-2 lg:grid-cols-4 ">
-            {products.items.map((product) => (
-                <Product key={product.id} product={product} />
-            ))}
-        </section>
+        <>
+            <MetaTags title={meta.title} keywords={meta.keywords} />
+            <section className=" grid grid-cols-2 grid-rows-[1fr] justify-items-center gap-2  py-2 px-4  md:grid-cols-4">
+                {products.map((product) => (
+                    <Product key={product.id} product={product} />
+                ))}
+            </section>
+        </>
     );
 }
 
 export async function getStaticPaths() {
-    const listOfCategories = await getIncludeInTheMenu(2);
-    const paths = getCategoryPaths(listOfCategories, "category_id");
+    const list = await DatabaseClient.category.findMany({
+        where: {
+            include_in_menu: 1,
+        },
+        select: {
+            url_path: true,
+        },
+    });
+
+    const paths = list.map(({ url_path }) => {
+        return {
+            params: { category_id: `${url_path}`.split("/") },
+        };
+    });
+
     return {
         paths,
         fallback: false,
@@ -27,37 +50,37 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params: { category_id } }) {
-    const nominWeirdURLsuffix = ".html";
-    const resolveURL = category_id.join("/") + nominWeirdURLsuffix;
+    const resolvedURL = category_id.join("/");
 
-    const category_id_data = await getCategoryIdFromURL(resolveURL);
-
-    const {
-        data: {
-            urlResolver: { id: resolvedID },
-        },
-    } = category_id_data;
-
-    const variables = {
-        currentPage: 1,
-        id: resolvedID,
-        filters: {
-            category_id: {
-                eq: `${resolvedID}`,
+    const [{ products: db_products, name: category_name }] =
+        await DatabaseClient.category.findMany({
+            where: {
+                url_path: resolvedURL,
             },
-        },
-        pageSize: 50,
-    };
+            select: {
+                name: true,
+                products: true,
+            },
+        });
 
-    const { data } = await getCategoryItems(variables);
+    /**
+     * Serve at most 100 products per page
+     * In order to that make a getStaticProps should return 100 products
+     * And handle the rest of the products via some API call?
+     * Reason: 300kb per page thats absurd!
+     */
 
-    if (data.products.items.length === 0) {
+    if (!db_products && db_products.length === 0) {
         return {
             notFound: true,
         };
     }
 
     return {
-        props: { data },
+        props: {
+            products: db_products.slice(0, 100),
+            category_id,
+            category_name,
+        },
     };
 }

@@ -10,7 +10,36 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Product {
-  sku String @unique
-  product Json
+model Category {
+  id              Int        @id
+  name            String
+  include_in_menu Int?       @default(1)
+  position        Int?
+  url_path        String?
+  url_key         String?
+  children        Category[] @relation("children")
+  parent          Category?  @relation("children", fields: [parentId], references: [id])
+  parentId        Int?       @map("categoryId")
+  products        Json       @default("[]")
+  product_count   Int        @default(0)
+  // saving each product to json might not have enought row max 10'k
 }
+
+model GoogleSearchCache {
+  sku       String   @id
+  model     String
+  results   Json?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// model Product {
+//   id Int @id 
+//   category Category @relation(fields: [categoryId], references: [id])
+//   categoryId Int
+//   sku String 
+//   media_gallery Json
+//   url_path String
+//   url_suffix String
+//   url_key String
+// }

@@ -1,5 +1,6 @@
 import { string, shape, number, any, array, arrayOf } from "prop-types";
 import { useEffect, useState } from "react";
+import Price from "../Price/Price";
 
 export default function ProductDetailRightSide({ results }) {
     const {
@@ -8,9 +9,9 @@ export default function ProductDetailRightSide({ results }) {
         short_description: { html },
         url_key,
         price: {
-            regularPrice: { value = 1222 },
+            regularPrice: { value },
         },
-        special_price = 9999999,
+        special_price,
     } = results;
 
     const [listOfAvailableShops, setListOfAvailableShops] = useState([
@@ -29,13 +30,15 @@ export default function ProductDetailRightSide({ results }) {
         };
         (async () => {
             const pending_response = await fetch(
-                "/api/search?=nomin_sku=true",
+                "/api/search?nomin_sku=true",
                 requestVariables
             );
             const response = await pending_response.json();
+            console.log(response.results);
+
             response &&
-                response.length > 0 &&
-                setListOfAvailableShops(response);
+                response.results.length > 0 &&
+                setListOfAvailableShops(response.results);
         })();
     }, [url_key]);
 
@@ -57,7 +60,9 @@ export default function ProductDetailRightSide({ results }) {
                 rel="noopener noreferrer"
             >
                 <img
+                    draggable={false}
                     className="absolute left-4 z-10"
+                    alt="nothing"
                     width={25}
                     height={25}
                     src={image}
@@ -65,7 +70,7 @@ export default function ProductDetailRightSide({ results }) {
                         currentTarget.remove();
                     }}
                 />
-                <span className=" text-blue-500 ">
+                <span className=" text-blue-500">
                     {text.replace(/[^\x00-\x7F]/g, "")}
                 </span>
             </a>
@@ -76,12 +81,7 @@ export default function ProductDetailRightSide({ results }) {
             <BoldText text={name} />
             <BoldText text={brand_name} className="pl-1" />
             <div className="flex justify-between ">
-                <span className={`${special_price ? "line-through" : ""}`}>
-                    {value.toLocaleString()}₮
-                </span>
-                {special_price && (
-                    <span>{special_price.toLocaleString()}₮</span>
-                )}
+                <Price normalPrice={value} specialPrice={special_price} />
             </div>
             <p className="mb-4">{html.replaceAll(/(<p>)|(<\/p>)/g, "")}</p>
             {listOfAvailableShops.map((shop, index) => (

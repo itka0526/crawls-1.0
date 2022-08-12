@@ -5,59 +5,55 @@ import GET_MODEL_NUMBER from "../../queries/getModelNumber.gql";
 
 export default async function handler(req, res) {
     if (req.method === "POST") {
+        console.log("REQUEST!!");
         const { query } = req.body;
         const { nomin_sku: isSkuKeyTrue } = req.query;
 
         if (isSkuKeyTrue) {
             try {
-                const {
-                    data: {
-                        getOverviewData: [{ model }],
-                    },
-                } = await ApolloInstance.query({
-                    query: GET_MODEL_NUMBER,
-                    variables: { sku: query },
-                });
-                if (!model) {
-                    return res.json([]);
-                }
-                const doesDBhaveIt = await DatabaseClient.product.findUnique({
-                    where: {
-                        sku: model,
-                    },
-                    select: {
-                        product: true,
-                    },
-                });
+                const doesDBhaveIt =
+                    await DatabaseClient.GoogleSearchCache.findUnique({
+                        where: {
+                            sku: query,
+                        },
+                    });
 
                 if (doesDBhaveIt) {
                     console.log("Database has it!");
-                    const { product } = doesDBhaveIt;
-                    return res.json(product);
-                } else {
-                    const results = await queryGoogleForProduct(model);
-                    console.log("Google has it!");
 
-                    return await DatabaseClient.product.create({
-                        data: {
-                            sku: model,
-                            product: results,
-                        },
+                    return res.json(doesDBhaveIt);
+                } else {
+                    const nominResults = await ApolloInstance.query({
+                        query: GET_MODEL_NUMBER,
+                        variables: { sku: query },
                     });
+                    console.log(nominResults.data.getOverviewData[0].model);
+                    const googleResults = await queryGoogleForProduct(
+                        nominResults.data.getOverviewData[0].model
+                    );
+
+                    console.log("Google has it!", googleResults);
+                    const response = {
+                        sku: query,
+                        model: nominResults.data.getOverviewData[0].model,
+                        results: googleResults,
+                    };
+
+                    await DatabaseClient.GoogleSearchCache.create({
+                        data: response,
+                    });
+
+                    res.json(response);
                 }
             } catch (error) {
-                return res.json([
-                    {
-                        status: "failed",
-                        message: `Couldn't fetch model number. [${query}]`,
-                    },
-                ]);
+                console.error(error);
+                return res.json([]);
             }
+        } else {
+            const results = await queryGoogleForProduct(query);
+
+            return res.status(200).json(results);
         }
-
-        const results = await queryGoogleForProduct(query);
-
-        return res.status(200).json(results);
     } else {
         return res.status(500).send("Error! Method wrong! ");
     }

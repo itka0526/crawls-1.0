@@ -23,11 +23,11 @@ const ImageCarousel = ({ images }) => {
         boxShadow:
             "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)",
         backdropFilter: "blur(3.7px)",
-        "-webkit-backdrop-filter": "blur(3.7px)",
+        WebkitBackdropFilter: "blur(3.7px)",
         top: "0",
         bottom: "0",
         margin: "auto",
-        zIndex: "1000",
+        zIndex: "40",
         borderRadius: "50%",
         transition: "transform 150ms",
         cursor: "pointer",
@@ -95,6 +95,7 @@ const ImageCarousel = ({ images }) => {
                             />
                         ) : (
                             <Image
+                                draggable={false}
                                 priority
                                 key={`thumnail-image-${
                                     small_url || file || url
@@ -114,6 +115,7 @@ const ImageCarousel = ({ images }) => {
                     key={`main-image-${file || url}`}
                 >
                     <Image
+                        draggable={false}
                         alt="image-product"
                         src={file || url}
                         layout="fill"

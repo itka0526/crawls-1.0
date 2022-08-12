@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { string, shape, number, any, array, arrayOf } from "prop-types";
+import Price from "../Price/Price";
 
 export default function Product({ product }) {
     const {
@@ -20,14 +21,15 @@ export default function Product({ product }) {
     const thumbail = small_image.url || media_gallery[0].file_small;
 
     return (
-        <div className="m-1 grid grid-rows-[3rem_1fr_2rem_2rem_2rem] rounded-sm border px-2 ">
-            <div>
+        <div className="grid h-full w-full grid-flow-row  rounded-sm border p-2  transition-shadow hover:shadow-lg">
+            <div className="w-full overflow-hidden text-ellipsis whitespace-nowrap ">
                 <span>{brand_name}</span>
             </div>
             <div className="mb-4 w-full">
                 <Link href={`/product/${url_key}`}>
-                    <div className="relative h-44 w-full">
+                    <div className="relative w-full pb-[100%]">
                         <Image
+                            draggable={false}
                             alt="image-product"
                             layout="fill"
                             objectFit="contain"
@@ -36,15 +38,16 @@ export default function Product({ product }) {
                     </div>
                 </Link>
             </div>
-            <div>
-                <span className="font-bold">{name}</span>
+            <div className="overflow-hidden text-ellipsis whitespace-nowrap">
+                <span className="overflow-hidden whitespace-nowrap font-bold">
+                    {name}
+                </span>
             </div>
             <div className="w-full overflow-hidden text-ellipsis whitespace-nowrap text-sm">
                 <span>{html.replaceAll(/(<p>)|(<\/p>)/g, "")}</span>
             </div>
-            <div className="flex">
-                <span>{value.toLocaleString()}₮</span>
-                {special_price && <span>{special_price}</span>}
+            <div className="flex flex-wrap items-center text-lg ">
+                <Price normalPrice={value} specialPrice={special_price} />
             </div>
         </div>
     );

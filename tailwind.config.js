@@ -10,6 +10,9 @@ module.exports = {
                 "black-rgba": "rgba(0, 0, 0, 0.1)",
                 "dark-black-rgba": "rgba(0, 0, 0, 0.5)",
             },
+            borderColor: {
+                "white-25": "rgb(238, 238, 238)",
+            },
             screens: {
                 "max-2xl": { max: "1535px" },
                 // => @media (max-width: 1535px) { ... }
