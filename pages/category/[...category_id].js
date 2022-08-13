@@ -50,9 +50,17 @@ export async function getStaticPaths() {
         };
     });
 
+    console.log(
+        paths
+            .map(({ url_path }) => {
+                return `${url_path}`.split("/");
+            })
+            .filter((arg) => arg === null)
+    );
+
     return {
         paths,
-        fallback: false,
+        fallback: "blocking",
     };
 }
 

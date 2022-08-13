@@ -29,7 +29,7 @@ export default function MobileCategoryTree({
     );
 }
 
-const MobileBranch = ({ closeTree, name, url_path, items, depth = 1 }) => {
+const MobileBranch = ({ closeTree, name, url_path, items = [], depth = 1 }) => {
     const [open, setOpen] = useState(false);
     const handleClick = () => setOpen((prev) => !prev);
 
