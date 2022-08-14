@@ -52,9 +52,11 @@ export async function getStaticPaths() {
         JSON.stringify(allProducts)
     );
 
-    const paths = allProducts.map(({ url_key }) => {
-        return { params: { product_id: url_key } };
-    });
+    const paths = allProducts
+        .map(({ url_key }) => {
+            return { params: { product_id: url_key } };
+        })
+        .slice(0, 25);
 
     return { paths, fallback: "blocking" };
 }

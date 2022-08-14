@@ -44,19 +44,15 @@ export async function getStaticPaths() {
         },
     });
 
-    const paths = list.map(({ url_path }) => {
-        return {
-            params: { category_id: `${url_path}`.split("/") },
-        };
-    });
+    const paths = list
+        .map(({ url_path }) => {
+            return {
+                params: { category_id: `${url_path}`.split("/") },
+            };
+        })
+        .slice(0, 25);
 
-    console.log(
-        paths
-            .map(({ url_path }) => {
-                return `${url_path}`.split("/");
-            })
-            .filter((arg) => arg === null)
-    );
+    console.log(paths);
 
     return {
         paths,
