@@ -9,17 +9,15 @@ export default function MobileCategoryTree({
     const closeTree = () => handleTreeState(false);
     return (
         <div className="h-full cursor-pointer overflow-scroll transition-[height]">
-            {includedInTheTree.map(
-                ({ id, name, url_path, children: items }) => (
-                    <MobileBranch
-                        closeTree={closeTree}
-                        key={`mobile-branch-${id}`}
-                        name={name}
-                        url_path={url_path}
-                        items={items}
-                    />
-                )
-            )}
+            {includedInTheTree.map(({ id, name, url_path, children }) => (
+                <MobileBranch
+                    closeTree={closeTree}
+                    key={`mobile-branch-${id}`}
+                    name={name}
+                    url_path={url_path}
+                    items={children}
+                />
+            ))}
             <div className="flex h-40 w-full  justify-center  bg-slate-50">
                 <div className="flex h-12 w-3/4 translate-y-5 items-center justify-center rounded-lg bg-white p-2 shadow-sm">
                     <span className=" text-gray-500">Утас: +976 99242039</span>
@@ -29,11 +27,14 @@ export default function MobileCategoryTree({
     );
 }
 
-const MobileBranch = ({ closeTree, name, url_path, items = [], depth = 1 }) => {
+const MobileBranch = ({ closeTree, name, url_path, items, depth = 1 }) => {
+    console.log(items);
     const [open, setOpen] = useState(false);
     const handleClick = () => setOpen((prev) => !prev);
 
-    const childrenHeight = `${items.length * 2.75}rem`;
+    const length = typeof items === "object" ? items.length : 0;
+
+    const childrenHeight = `${length * 2.75}rem`;
     return (
         <>
             <div
@@ -46,7 +47,7 @@ const MobileBranch = ({ closeTree, name, url_path, items = [], depth = 1 }) => {
                     name={name}
                     path={url_path}
                     state={open}
-                    disabled={!items.length > 0}
+                    disabled={length === 0}
                 />
             </div>
             <div
@@ -57,13 +58,13 @@ const MobileBranch = ({ closeTree, name, url_path, items = [], depth = 1 }) => {
                 }}
             >
                 {items &&
-                    items.map(({ id, name, url_path, items }) => (
+                    items.map(({ id, name, url_path, children }) => (
                         <MobileBranch
                             depth={depth + 1}
                             key={`mobile-branch-${depth}-${id}`}
                             name={name}
                             url_path={url_path}
-                            items={items}
+                            items={children}
                         />
                     ))}
             </div>
@@ -73,8 +74,11 @@ const MobileBranch = ({ closeTree, name, url_path, items = [], depth = 1 }) => {
 
 const MobileBranchContent = ({ disabled, name, state, path, closeTree }) => (
     <div className="flex h-11 w-full items-center justify-between pr-1">
-        <Link href={path}>
-            <a onClick={closeTree} className="flex-1">
+        <Link href={`/category/${path}`}>
+            <a
+                onClick={closeTree}
+                className="flex-1 overflow-hidden text-ellipsis whitespace-nowrap"
+            >
                 {name}
             </a>
         </Link>

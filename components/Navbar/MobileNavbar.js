@@ -24,12 +24,7 @@ export default function MobileNav({ open, setOpen, data }) {
                 </div>
             </div>
 
-            <div
-                className={`h-full bg-black  ${
-                    !open ? "opacity-0" : "opacity-20"
-                }`}
-                onClick={close}
-            ></div>
+            <div className={`h-full`} onClick={close}></div>
         </div>
     );
 }
