@@ -3,7 +3,7 @@ import Link from "next/link";
 import { string, shape, number, any, array, arrayOf } from "prop-types";
 import Price from "../Price/Price";
 
-export default function Product({ product }) {
+export default function Product({ product, category_id }) {
     const {
         brand_name,
         small_image,
@@ -26,7 +26,7 @@ export default function Product({ product }) {
                 <span>{brand_name}</span>
             </div>
             <div className="mb-4 w-full">
-                <Link href={`/product/${url_key}`}>
+                <Link href={`/product/${category_id}/${url_key}`}>
                     <div className="relative w-full pb-[100%]">
                         <Image
                             draggable={false}

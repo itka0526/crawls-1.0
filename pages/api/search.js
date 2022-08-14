@@ -32,6 +32,13 @@ export default async function handler(req, res) {
                         nominResults.data.getOverviewData[0].model
                     );
 
+                    if (!nominResults.data.getOverviewData[0].model) {
+                        return res.json({
+                            sku: query,
+                            model: "unknown",
+                            results: [],
+                        });
+                    }
                     console.log("Google has it!", googleResults);
                     const response = {
                         sku: query,

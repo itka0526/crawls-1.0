@@ -37,6 +37,7 @@ export default function ProductDetailRightSide({ results }) {
             console.log(response.results);
 
             response &&
+                response.results &&
                 response.results.length > 0 &&
                 setListOfAvailableShops(response.results);
         })();
