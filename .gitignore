@@ -32,3 +32,5 @@ temporary.json
 
 # vercel
 .vercel
+
+.env
