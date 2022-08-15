@@ -1,14 +1,13 @@
 import ProductDetailLeftSide from "../../components/ProductDetail/ProductDetailLeftSide";
 import ProductDetailRightSide from "../../components/ProductDetail/ProductDetailRightSide";
 import DatabaseClient from "../../lib/DatabaseClient";
-import path from "path";
 import MetaTags from "../../components/DefaultMetaTags/MetaTags";
 
 export default function ProductDetail({ results }) {
     const meta = {
         title: `${results.name} - Кравлер`,
         keywords: `${results.name}, ${results.brand_name}, ${results.sku}, Кравлер `,
-        description: `${results.short_description.html}. Барааны код: ${results.sku}`,
+        description: `${results.short_description.html}. Барааны код: ${results.sku}. Үнэ: ${results.price.regularPrice.value}₮`,
     };
     return (
         <>
@@ -61,58 +60,3 @@ export async function getServerSideProps({ res, resolvedUrl }) {
         props: { results },
     };
 }
-
-// export async function getStaticPaths() {
-//     if (process.env.INITIATED === "FALSE") {
-//         return {
-//             paths: [],
-//             fallback: "blocking",
-//         };
-//     }
-//     const categoriesOfProducts = await DatabaseClient.category.findMany({
-//         select: {
-//             products: true,
-//         },
-//     });
-
-//     const allProducts = categoriesOfProducts.reduce(
-//         (previousValue, currentValue) => [
-//             ...previousValue,
-//             ...currentValue.products,
-//         ],
-//         []
-//     );
-
-//     await writeFile(
-//         path.join(process.cwd(), "temporary.json"),
-//         JSON.stringify(allProducts)
-//     );
-
-//     const paths = allProducts
-//         .map(({ url_key }) => {
-//             return { params: { product_id: url_key } };
-//         })
-//         .slice(0, 25);
-
-//     return { paths, fallback: "blocking" };
-// }
-
-// export async function getStaticProps({ params: { product_id } }) {
-//     const rawAllProducts = await readFile(
-//         path.join(process.cwd(), "temporary.json")
-//     );
-//     const allProducts = JSON.parse(rawAllProducts);
-
-//     let results;
-
-//     for (let i = 0; i < allProducts.length; i++) {
-//         if (allProducts[i].url_key === product_id) {
-//             results = allProducts[i];
-//             break;
-//         }
-//     }
-
-//     return {
-//         props: { results },
-//     };
-// }
