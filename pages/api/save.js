@@ -1,5 +1,3 @@
-import { puppeteerGetData } from "../../lib/puppeteer";
-
 export default async function handler(req, res) {
     const arr = [
         {
@@ -30,8 +28,8 @@ export default async function handler(req, res) {
 
     let test = arr[2];
 
-    const result = await puppeteerGetData(test.link);
-    res.setHeader("Content-Type", "image/*");
+    // const result = await puppeteerGetData(test.link);
+    // res.setHeader("Content-Type", "image/*");
 
-    res.send(result);
+    res.send("shit");
 }
