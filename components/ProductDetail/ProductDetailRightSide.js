@@ -35,7 +35,6 @@ export default function ProductDetailRightSide({ results }) {
             );
             const response = await pending_response.json();
             console.log(response.results);
-
             response &&
                 response.results &&
                 response.results.length > 0 &&
@@ -56,13 +55,13 @@ export default function ProductDetailRightSide({ results }) {
         return (
             <a
                 href={link}
-                className=" relative mb-4 flex h-12 w-full items-center overflow-hidden text-ellipsis whitespace-nowrap rounded-md border bg-slate-50 pl-12 shadow-sm"
+                className=" relative mb-4 flex h-11 w-full items-center overflow-hidden text-ellipsis whitespace-nowrap rounded-md border bg-slate-50 pl-12 shadow-sm max-md:pl-9"
                 target={"_blank"}
                 rel="noopener noreferrer"
             >
                 <img
                     draggable={false}
-                    className="absolute left-4 z-10"
+                    className="absolute left-2 z-[5]"
                     alt="nothing"
                     width={25}
                     height={25}
@@ -71,7 +70,7 @@ export default function ProductDetailRightSide({ results }) {
                         currentTarget.remove();
                     }}
                 />
-                <span className=" text-blue-500">
+                <span className=" w-full overflow-hidden text-ellipsis text-blue-500">
                     {text.replace(/[^\x00-\x7F]/g, "")}
                 </span>
             </a>

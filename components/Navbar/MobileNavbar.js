@@ -7,10 +7,10 @@ export default function MobileNav({ open, setOpen, data }) {
         <div
             className={`fixed top-0 left-0 h-screen w-screen  transform bg-transparent ${
                 open ? "translate-x-0" : "translate-x-[calc(-100%-1px)]"
-            } grid grid-cols-[80%,_20%] drop-shadow-md filter transition-transform duration-300 ease-in-out`}
+            } grid grid-cols-[82.5%,_17.5%] drop-shadow-md filter transition-transform duration-300 ease-in-out`}
         >
             <div className="h-full overflow-hidden bg-white">
-                <div className=" flex h-[62px] items-center justify-center bg-white drop-shadow-md filter">
+                <div className=" flex h-14 items-center justify-center bg-white shadow-md ">
                     <Link href="/">
                         <a className="text-xl font-semibold">CRAWLS</a>
                     </Link>

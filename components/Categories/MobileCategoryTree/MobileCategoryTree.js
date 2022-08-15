@@ -28,21 +28,19 @@ export default function MobileCategoryTree({
 }
 
 const MobileBranch = ({ closeTree, name, url_path, items, depth = 1 }) => {
-    console.log(items);
     const [open, setOpen] = useState(false);
     const handleClick = () => setOpen((prev) => !prev);
 
     const length = typeof items === "object" ? items.length : 0;
 
-    const childrenHeight = `${length * 2.75}rem`;
     return (
         <>
             <div
-                onClick={handleClick}
                 className="border-t border-white-25 "
-                style={{ paddingLeft: depth * 8 }}
+                style={{ paddingLeft: depth * 16 }}
             >
                 <MobileBranchContent
+                    handleClick={handleClick}
                     closeTree={closeTree}
                     name={name}
                     path={url_path}
@@ -50,29 +48,31 @@ const MobileBranch = ({ closeTree, name, url_path, items, depth = 1 }) => {
                     disabled={length === 0}
                 />
             </div>
-            <div
-                className={`overflow-hidden  transition-[height] 
-                `}
-                style={{
-                    height: open ? childrenHeight : 0,
-                }}
-            >
-                {items &&
-                    items.map(({ id, name, url_path, children }) => (
-                        <MobileBranch
-                            depth={depth + 1}
-                            key={`mobile-branch-${depth}-${id}`}
-                            name={name}
-                            url_path={url_path}
-                            items={children}
-                        />
-                    ))}
-            </div>
+
+            {open &&
+                items &&
+                items.map(({ id, name, url_path, children }) => (
+                    <MobileBranch
+                        closeTree={closeTree}
+                        depth={depth + 1}
+                        key={`mobile-branch-${depth}-${id}`}
+                        name={name}
+                        url_path={url_path}
+                        items={children}
+                    />
+                ))}
         </>
     );
 };
 
-const MobileBranchContent = ({ disabled, name, state, path, closeTree }) => (
+const MobileBranchContent = ({
+    handleClick,
+    disabled,
+    name,
+    state,
+    path,
+    closeTree,
+}) => (
     <div className="flex h-11 w-full items-center justify-between pr-1">
         <Link href={`/category/${path}`}>
             <a
@@ -83,13 +83,14 @@ const MobileBranchContent = ({ disabled, name, state, path, closeTree }) => (
             </a>
         </Link>
         <ChevronRight
-            width={28}
-            height={28}
+            onClick={handleClick}
+            width={25}
+            height={25}
             style={{
                 transform: state && !disabled ? "rotate(90deg)" : "rotate(0)",
                 opacity: disabled ? "0.5" : 1,
             }}
-            className="mr-1 ml-3 transition-transform"
+            className="mr-1 ml-3 transition-transform duration-150"
         />
     </div>
 );
